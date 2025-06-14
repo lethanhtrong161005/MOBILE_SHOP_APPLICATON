@@ -1,0 +1,15 @@
+
+:root{
+    --color-bg:#d4edda;
+    --color-btn:#28a745;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+}
+
+
