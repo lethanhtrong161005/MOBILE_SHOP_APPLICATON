@@ -25,11 +25,9 @@ import utils.Const;
 @WebServlet(name="LoginController", urlPatterns={Const.DEFAULT_URL, Const.LOGIN_URL})
 public class LoginController extends HttpServlet {
     
-    private LoginService loginService;
+    private LoginService loginService = new LoginService();
 
-    public void init() throws ServletException{
-        loginService = new LoginService();
-    }
+    
     
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.

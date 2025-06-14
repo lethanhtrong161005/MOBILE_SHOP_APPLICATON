@@ -14,11 +14,8 @@ import models.dto.Mobile;
  */
 public class MobileService implements I_MobileService{
     
-    private final MobileDAO mobileDAO;
+    private final MobileDAO mobileDAO = new MobileDAO();
 
-    public MobileService() {
-        this.mobileDAO = new MobileDAO();
-    }
     
     @Override
     public List<Mobile> getAllMobile() {

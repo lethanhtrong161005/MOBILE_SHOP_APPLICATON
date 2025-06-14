@@ -13,11 +13,8 @@ import models.dto.User;
  */
 public class LoginService {
     
-    private final UserDAO userDAO;
+    private final UserDAO userDAO = new UserDAO();
 
-    public LoginService() {
-        this.userDAO = new UserDAO();
-    }
     
     
     
