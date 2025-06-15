@@ -46,7 +46,7 @@ public class MobileService implements I_MobileService{
         // Validate txtId
         if (txtId == null || txtId.trim().isEmpty()) {
             ErrorUtils.addError(errors, "txtId", "Mobile id is not empty");
-        } else if (!Pattern.matches(txtId, Const.MOBILE_ID_PATTERN)) {
+        } else if (!Pattern.matches(Const.MOBILE_ID_PATTERN, txtId)) {
             ErrorUtils.addError(errors, "txtId", "Mobile id must start with 'mb' (case-insensitive)");
         } else if (mobileDAO.findById(txtId.trim()) != null) {
             ErrorUtils.addError(errors, "txtId", "Mobile id already exists");
@@ -110,7 +110,7 @@ public class MobileService implements I_MobileService{
         
         if(errors.isEmpty()){
             Mobile mobile = new Mobile(
-                    txtId.trim(),
+                    txtId.trim().toUpperCase(),
                     txtName.trim(),
                     txtDescription,
                     Double.parseDouble(txtPrice.trim()),

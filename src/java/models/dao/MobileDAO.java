@@ -69,29 +69,30 @@ public class MobileDAO implements I_MobileDAO{
 
     @Override
     public Mobile findById(String id) {
-        Mobile mobile = new Mobile();
-        try(Connection connection = DbUtils.getConnection();
-            PreparedStatement statement = connection.prepareStatement(Query.FIND_MOBILE_BY_ID)){
-            
+        try ( Connection connection = DbUtils.getConnection();  
+            PreparedStatement statement = connection.prepareStatement(Query.FIND_MOBILE_BY_ID)) 
+        {
+
             statement.setString(1, id);
-            
             ResultSet rs = statement.executeQuery();
-            
-            while(rs.next()){
+
+            if (rs.next()) {
+                Mobile mobile = new Mobile();
                 mobile.setMobileId(rs.getString("mobileId"));
                 mobile.setMobileName(rs.getString("mobileName"));
                 mobile.setDescription(rs.getString("description"));
                 mobile.setPrice(rs.getFloat("price"));
                 mobile.setQuantity(rs.getInt("quantity"));
                 mobile.setYearOfProduction(rs.getInt("yearOfProduction"));
-                mobile.setNotSale(rs.getBoolean("notSale"));     
+                mobile.setNotSale(rs.getBoolean("notSale"));
+                return mobile;
             }
-            
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("findById: " + e.getMessage());
         }
-        return mobile;
+        return null; 
     }
+
 
     
     
