@@ -12,4 +12,9 @@ body{
     margin: 0;
 }
 
+.error-message {
+    display: block;
+    margin-top: 5px;
+}
+
 

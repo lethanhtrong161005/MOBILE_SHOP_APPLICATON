@@ -44,5 +44,55 @@ public class MobileDAO implements I_MobileDAO{
         }
         return mobiles;
     }
+
+    @Override
+    public boolean add(Mobile mobile) {
+        int rowAdded = 0;
+        try(Connection connection = DbUtils.getConnection();
+            PreparedStatement statement = connection.prepareStatement(Query.ADD_MOBILE)){
+            
+            statement.setString(1, mobile.getMobileId());
+            statement.setString(2, mobile.getMobileName());
+            statement.setString(3, mobile.getDescription());
+            statement.setFloat(4, (float) mobile.getPrice());
+            statement.setInt(5, mobile.getYearOfProduction());
+            statement.setInt(6, mobile.getQuantity());
+            statement.setBoolean(7, mobile.isNotSale());
+            
+            rowAdded = statement.executeUpdate();
+            
+        }catch(Exception e){
+            System.out.println("add: " + e.getMessage());
+        }
+        return rowAdded > 0;
+    }
+
+    @Override
+    public Mobile findById(String id) {
+        Mobile mobile = new Mobile();
+        try(Connection connection = DbUtils.getConnection();
+            PreparedStatement statement = connection.prepareStatement(Query.FIND_MOBILE_BY_ID)){
+            
+            statement.setString(1, id);
+            
+            ResultSet rs = statement.executeQuery();
+            
+            while(rs.next()){
+                mobile.setMobileId(rs.getString("mobileId"));
+                mobile.setMobileName(rs.getString("mobileName"));
+                mobile.setDescription(rs.getString("description"));
+                mobile.setPrice(rs.getFloat("price"));
+                mobile.setQuantity(rs.getInt("quantity"));
+                mobile.setYearOfProduction(rs.getInt("yearOfProduction"));
+                mobile.setNotSale(rs.getBoolean("notSale"));     
+            }
+            
+        }catch(Exception e){
+            System.out.println("findById: " + e.getMessage());
+        }
+        return mobile;
+    }
+
+    
     
 }

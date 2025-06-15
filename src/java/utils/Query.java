@@ -15,5 +15,9 @@ public interface Query {
     
     
     public final String FIND_ALL_MOBILE = "SELECT * FROM Mobiles";
+    
+    public final String FIND_MOBILE_BY_ID = "SELECT * FROM Mobiles WHERE mobileId = ?";
+    
+    public final String ADD_MOBILE = "INSERT INTO Mobiles (mobileId, mobileName, description, price, yearOfProduction, quantity, notSale)VALUES(?,?,?,?,?,?,?)";
    
 }

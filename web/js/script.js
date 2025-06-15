@@ -17,7 +17,6 @@ function deleteRow(btn) {
 
 function updateRow(btn) {
     alert("Update logic to DB goes here (not implemented)");
-    // Bạn sẽ thêm logic AJAX để gửi cập nhật đến server
 }
 
 function insertMobile(e) {
@@ -104,4 +103,55 @@ window.onload = function () {
     const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
     cart = savedCart;
     updateCartCount();
+}
+
+setTimeout(() => {
+        const alert = document.querySelector('#autoDismissAlert');
+        if (alert) {
+            alert.style.transition = 'opacity 0.5s ease';
+            alert.style.opacity = 0;
+            setTimeout(() => alert.remove(), 500);
+        }
+}, 2000);
+
+
+
+
+
+function showConfirmForm(event) {
+  event.preventDefault(); // Chặn submit mặc định
+
+  // Lấy các input
+  var id = document.getElementById('newId');
+  var name = document.getElementById('newName');
+  var year = document.getElementById('newYear');
+  var price = document.getElementById('newPrice');
+  var desc = document.getElementById('newDesc');
+  var qty = document.getElementById('newQty');
+  var status = document.getElementById('newNotSale');
+
+  // Xoá lỗi cũ nếu có
+  var errors = document.querySelectorAll('.error-message');
+  errors.forEach(function(el) { el.remove(); });
+
+  // Luôn hiển thị modal xác nhận (bỏ qua check hợp lệ)
+  var confirmContent = document.getElementById("confirmContent");
+  confirmContent.innerHTML =
+    "<strong>ID:</strong> " + id.value + "<br>" +
+    "<strong>Name:</strong> " + name.value + "<br>" +
+    "<strong>Year:</strong> " + year.value + "<br>" +
+    "<strong>Price:</strong> " + price.value + "<br>" +
+    "<strong>Description:</strong> " + (desc.value || "(none)") + "<br>" +
+    "<strong>Quantity:</strong> " + (qty.value || "0") + "<br>" +
+    "<strong>Status:</strong> " + (status.value === "true" ? "Not For Sale" : "For Sale");
+
+  document.getElementById("confirmModal").style.display = "flex";
+}
+
+function closeConfirm() {
+  document.getElementById("confirmModal").style.display = "none";
+}
+
+function submitConfirmed() {
+  document.getElementById("insertForm").submit();
 }
