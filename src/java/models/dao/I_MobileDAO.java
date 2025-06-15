@@ -12,5 +12,11 @@ import models.dto.Mobile;
  * @author admin
  */
 public interface I_MobileDAO {
+    
     List<Mobile> findAll();
+    
+    boolean add(Mobile mobile);
+    
+    Mobile findById(String id);
+    
 }

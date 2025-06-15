@@ -5,8 +5,10 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.util.List" %>
+<%@ page import="models.dto.Mobile"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +24,36 @@
 
 <body>
     
-    
+    <%
+    String status = (String)request.getParameter("status");
+    if(status != null){
+    %>
+    <div class="alert alert-success alert-dismissible fade in text-center d-flex align-items-center justify-content-center" 
+         role="alert" 
+         id="autoDismissAlert" 
+         style="
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 600px;
+            z-index: 9999;
+            margin: 0 auto;
+            border-radius: 0;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+         ">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" 
+                style="position: absolute; right: 10px; top: 10px;">&times;</button>
+        <strong style="width: 100%; text-align: center;">Login Success!</strong> 
+    </div>
+    <%
+        }
+    %>
+
 
     <!-- Header -->
     <header class="header">
@@ -59,35 +90,36 @@
     </header>
     <!-- End Header -->
     
+    
+
     <%
-        String msg = request.getParameter("message");
-        String alertType = request.getParameter("type");
-
-        if (msg == null || alertType == null) {
-            msg = (String) request.getAttribute("message");
-            alertType = (String) request.getAttribute("type");
+        String msg = (String)request.getAttribute("message");
+        String alertType = (String)request.getAttribute("type");
+        if(msg == null && alertType == null){
+            msg = (String)request.getParameter("message");
+            alertType = (String)request.getParameter("type");
         }
-
         if (msg != null && alertType != null) {
     %>
-        <div class="alert alert-<%= alertType %> alert-dismissible text-center">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+        <div class="alert alert-<%= alertType %> alert-dismissible text-center" role="alert" style="padding: 8px 15px; margin: 10px auto; max-width: 500px; font-size: 13px; position: relative;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="position: absolute; top: 5px; right: 10px;">&times;</button>
             <strong><%= msg %></strong>
         </div>
+
     <%
         }
     %>
 
-
-
     <!-- Title Page -->
-    <div class="title-des">
+    <div class="title-des" style="margin-bottom: 25px">
         <div class="container">
             <div class="inner-wrap">
-                <h1 style="margin-bottom: 20px;">Welcome To Staff</h1>
+                <h1 style="margin-bottom: 15px;">Welcome To Staff</h1>
+                <a href="<%= request.getContextPath() %>/staff-add" class="btn btn-primary w-100">Create New</a>
             </div>
-        </div>s
+        </div>
     </div>
+        
     <!-- End Title Page -->
 
 
@@ -122,53 +154,35 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Dữ liệu mẫu -->
-                <c:forEach items="${mobiles}" var="item">
-                    <tr>
-                        <td>${item.mobileId}</td>
-                        <td>${item.mobileName}</td>
-                        <td>${item.yearOfProduction}</td>
-                        <td contenteditable="true">${item.price}</td>
-                        <td contenteditable="true">${item.description}</td>
-                        <td contenteditable="true">${item.quantity}</td>
-                        <td contenteditable="true">${item.notSale}</td>
-                        <td>
-                            <button class="btn btn-danger btn-sm" onclick="deleteRow(this)">Delete</button>
-                            <button class="btn btn-success btn-sm" onclick="updateRow(this)">Update</button>
-                        </td>
-                    </tr>
-                    <!-- More rows will be added dynamically -->
-                </c:forEach>
+                <%
+                    List<Mobile> mobiles = (List<Mobile>) request.getAttribute("mobiles");
+                        if (mobiles != null) {
+                            NumberFormat formatter = NumberFormat.getNumberInstance(Locale.US);
+                            formatter.setMinimumFractionDigits(2);
+                            formatter.setMaximumFractionDigits(2);
+                        
+                            for (Mobile item : mobiles) {
+                %>
+                <tr>
+                    <td><%= item.getMobileId() %></td>
+                    <td><%= item.getMobileName() %></td>
+                    <td><%= item.getYearOfProduction() %></td>
+                    <td><%= formatter.format(item.getPrice()) %></td>
+                    <td><%= item.getDescription() %></td>
+                    <td><%= item.getQuantity() %></td>
+                    <td><%= item.isNotSale() %></td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" onclick="deleteRow(this)">Delete</button>
+                        <button class="btn btn-success btn-sm" onclick="updateRow(this)">Update</button>
+                    </td>
+                </tr>
+                <%
+                            }
+                        }
+                %>
                 
             </tbody>
         </table>
-
-        <!-- Insert new mobile -->
-        <h4>Add New Mobile</h4>
-        <form class="form-inline" onsubmit="insertMobile(event)">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="ID" id="newId" required>
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Name" id="newName" required>
-            </div>
-            <div class="form-group">
-                <input type="number" class="form-control" placeholder="Price" id="newPrice" required>
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Description" id="newDesc">
-            </div>
-            <div class="form-group">
-                <input type="number" class="form-control" placeholder="Quantity" id="newQty">
-            </div>
-            <div class="form-group">
-                <select class="form-control" id="newNotSale">
-                    <option value="false">For Sale</option>
-                    <option value="true">Not For Sale</option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Insert</button>
-        </form>
     </div>
     <!-- End Section One -->
 
@@ -189,7 +203,7 @@
     <!-- Bootstrap JS -->
     <script src="bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/script.js" type="text/javascript"></script>
 </body>
 
 </html>

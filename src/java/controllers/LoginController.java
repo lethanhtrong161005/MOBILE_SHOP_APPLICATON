@@ -22,7 +22,7 @@ import utils.Const;
  *
  * @author Le Thanh Trong
  */
-@WebServlet(name="LoginController", urlPatterns={Const.DEFAULT_URL, Const.LOGIN_URL})
+@WebServlet(name="LoginController", urlPatterns={Const.LOGIN_URL})
 public class LoginController extends HttpServlet {
     
     private LoginService loginService = new LoginService();
@@ -36,10 +36,14 @@ public class LoginController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest req, HttpServletResponse resp)
-    throws ServletException, IOException {
+    protected void processRequest(
+            HttpServletRequest req,
+            HttpServletResponse resp
+    )
+    throws ServletException, IOException 
+    {
         String path = req.getServletPath();
-        if(Const.DEFAULT_URL.endsWith(path) || Const.LOGIN_URL.endsWith(path)){
+        if(Const.LOGIN_URL.endsWith(path)){
             if("GET".equalsIgnoreCase(req.getMethod())){
                 loadFromLogin(req, resp);
             }else if("POST".equalsIgnoreCase(req.getMethod())){
@@ -57,29 +61,38 @@ public class LoginController extends HttpServlet {
     }
     
     //Login Post
-    private void login(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    private void login(
+            HttpServletRequest req, 
+            HttpServletResponse resp
+    )throws ServletException, IOException 
+    {
     
         String txtUseId = req.getParameter("txtUseId");
         String txtPassword = req.getParameter("txtPassword");
         User user = loginService.loginWithUserIdAndPassword(txtUseId, txtPassword);
         String url = Const.LOGIN_URL;
-        if(user != null){
+        
+        if (user != null) {
             HttpSession session = req.getSession();
             session.setAttribute("account", user);
             int roleId = user.getRole();
-            System.out.println(roleId);
-            if(roleId == 1){
-                url = Const.STAFF_URL;
-            }else if(roleId == 0){
-                url = Const.HOME_URL;
-            }else{
-                req.setAttribute("mess", "Your role is not support !");
-            }    
-        }else{
-            req.setAttribute("mess", "Invalid user id or password !");
+            if (roleId == 1) {
+                resp.sendRedirect(req.getContextPath() 
+                                    + Const.STAFF_URL
+                                    + "?status=success");
+            } else if (roleId == 0) {
+                resp.sendRedirect(req.getContextPath() + Const.HOME_URL);
+            } else {
+                req.setAttribute("message", "Your role is not supported!");
+                req.setAttribute("type", "danger");
+                req.getRequestDispatcher(Const.LOGIN_PAGE).forward(req, resp);
+            }
+        } else {
+            req.setAttribute("message", "Invalid user id or password!");
+            req.setAttribute("type", "danger");
+            req.getRequestDispatcher(Const.LOGIN_PAGE).forward(req, resp);
         }
-        resp.sendRedirect(req.getContextPath() + url);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

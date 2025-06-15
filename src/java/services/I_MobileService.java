@@ -4,6 +4,7 @@
  */
 package services;
 
+import java.util.HashMap;
 import java.util.List;
 import models.dto.Mobile;
 
@@ -15,6 +16,14 @@ public interface I_MobileService {
     
     List<Mobile> getAllMobile();
     
+    HashMap<String, List<String>> insertMobile(
+            String txtId, 
+            String txtName, 
+            String txtYearOfProduction,
+            String txtPrice,
+            String txtDescription,
+            String txtQuantity,
+            String txtNotSale);
     
     
 }
