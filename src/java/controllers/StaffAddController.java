@@ -64,12 +64,13 @@ public class StaffAddController extends HttpServlet {
         String txtNotSale = req.getParameter("txtNotSale");
         
         HashMap<String, List<String>> errors = mobileService.insertMobile(txtId, txtName, txtYearOfProduction, txtPrice, txtDescription, txtQuantity, txtNotSale);
-        if(errors != null){
+        if (errors.isEmpty()) {
+            resp.sendRedirect(req.getContextPath() + RedirectUtils.buildMessageRedirectUrl(Const.STAFF_URL, "Add Mobile Success", "success"));
+        } else {
             req.setAttribute("errors", errors);
             req.getRequestDispatcher(Const.STAFF_ADD_PAGE).forward(req, resp);
-        }else{
-            resp.sendRedirect(req.getContextPath() + RedirectUtils.buildMessageRedirectUrl(Const.STAFF_URL, "Add Mobile Success", "success"));
-        }        
+        }
+      
         
     }
     
