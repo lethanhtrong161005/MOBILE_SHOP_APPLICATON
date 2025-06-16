@@ -124,6 +124,13 @@ public class MobileService implements I_MobileService{
         return errors;
     }
 
+    @Override
+    public Mobile searchByID(String id) {
+        return mobileDAO.findById(id.trim());
+    }
+    
+    
+
     
     
 }

@@ -25,5 +25,5 @@ public interface I_MobileService {
             String txtQuantity,
             String txtNotSale);
     
-    
+    Mobile searchByID(String id);
 }

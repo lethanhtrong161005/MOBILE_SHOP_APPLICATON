@@ -20,6 +20,7 @@ public interface Const {
     public final String STAFF_URL ="/staff";
     public final String STAFF_SEARCH_URL = "/staff/search";
     public final String STAFF_ADD_URL = "/staff-add";
+    public final String STAFF_DELETE_URL = "/staff-delete";
     
     public final String HOME_URL = "/home";
     public final String LOGOUT_URL = "/logout";
@@ -32,6 +33,7 @@ public interface Const {
     public final String STAFF_PAGE = "staff-page.jsp";
     public final String HOME_PAGE = "home-page.jsp";
     public final String STAFF_ADD_PAGE = "add-page.jsp";
+    public final String STAFF_DELETE_PAGE = "delete-page.jsp";
 //    End Page Name
     
     

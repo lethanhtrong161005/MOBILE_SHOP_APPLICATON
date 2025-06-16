@@ -172,8 +172,15 @@
                     <td><%= item.getQuantity() %></td>
                     <td><%= item.isNotSale() %></td>
                     <td>
-                        <button class="btn btn-danger btn-sm" onclick="deleteRow(this)">Delete</button>
-                        <button class="btn btn-success btn-sm" onclick="updateRow(this)">Update</button>
+                        <form action="<%= request.getContextPath() %>/staff-delete" method="GET" style="display:inline;">
+                                    <input type="hidden" name="txtId" value="<%= item.getMobileId() %>" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                        <form action="<%= request.getContextPath() %>/update" method="GET" style="display:inline;">
+                                    <input type="hidden" name="txtId" value="<%= item.getMobileId() %>" />
+                                    <button type="submit" class="btn btn-success btn-sm">Update</button>
+                        </form>
+                        
                     </td>
                 </tr>
                 <%
