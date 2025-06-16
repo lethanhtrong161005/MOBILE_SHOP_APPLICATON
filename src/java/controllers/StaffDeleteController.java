@@ -6,27 +6,24 @@
 package controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 import models.dto.Mobile;
 import services.MobileService;
 import utils.Const;
-import utils.RedirectUtils;
 
 /**
  *
- * @author Le Thanh Trong
+ * @author admin
  */
-@WebServlet(name="StaffManageController", urlPatterns={Const.STAFF_URL, 
-                                                })
-public class StaffManageController extends HttpServlet {
+@WebServlet(name="StaffDeleteController", urlPatterns={Const.STAFF_DELETE_URL})
+public class StaffDeleteController extends HttpServlet {
     
     private MobileService mobileService = new MobileService();
-    
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,43 +32,35 @@ public class StaffManageController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(
-            HttpServletRequest req, 
+    protected void processRequest(HttpServletRequest req, 
             HttpServletResponse resp
-    )
-    throws ServletException, IOException 
+    )throws ServletException, IOException 
     {
-       String path = req.getServletPath();
-       if(Const.STAFF_URL.endsWith(path)){
-           loadMobileList(req, resp);
-       }else if(Const.STAFF_DELETE_URL.endsWith(path)){
-           if("GET".equalsIgnoreCase(req.getMethod())){
-               resp.sendRedirect(req.getContextPath() + Const.STAFF_DELETE_URL);
-           }
-       }
-           
+        String path = req.getServletPath();
+        if(Const.STAFF_DELETE_URL.endsWith(path)){
+            
+        }
     }
     
-    
-    //Load Mobile List
-    private void loadMobileList(
+    private void loadFormDeleteGet(
             HttpServletRequest req, 
             HttpServletResponse resp
     )throws ServletException, IOException
     {
-        List<Mobile> mobiles = mobileService.getAllMobile();
-        
-        if (mobiles != null && !mobiles.isEmpty()) {
-            // forward để giữ list
-            req.setAttribute("mobiles", mobiles);
-        } else {
-            // redirect để gửi message bằng query param
-            req.setAttribute("message", "Mobile list is empty");
-            req.setAttribute("type", "warning");
+        String txtId = req.getParameter("txtId");
+        Mobile mobile = mobileService.searchByID(txtId);
+        if (mobile == null || mobile.getMobileId() == null) {
+            req.setAttribute("message", "Mobile not found");
+            req.setAttribute("type", "danger");
+            req.getRequestDispatcher(Const.STAFF_PAGE).forward(req, resp);
+            return;
         }
-        req.getRequestDispatcher(Const.STAFF_PAGE).forward(req, resp);
+        
+        req.setAttribute("mobile", mobile);
+        req.getRequestDispatcher(Const.STAFF_DELETE_PAGE).forward(req, resp); 
     }
- // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
