@@ -18,6 +18,7 @@
             <file>file:/Users/admin/Documents/ws_temp/MOBILE_SHOP_APPLICATON/web/delete-page.jsp</file>
             <file>file:/Users/admin/Documents/ws_temp/MOBILE_SHOP_APPLICATON/src/java/models/dto/Mobile.java</file>
             <file>file:/Users/admin/Documents/ws_temp/MOBILE_SHOP_APPLICATON/src/java/services/I_MobileService.java</file>
+            <file>file:/Users/admin/Documents/ws_temp/MOBILE_SHOP_APPLICATON/src/java/controllers/UserSearchController.java</file>
             <file>file:/Users/admin/Documents/ws_temp/MOBILE_SHOP_APPLICATON/src/java/controllers/StaffAddController.java</file>
             <file>file:/Users/admin/Documents/ws_temp/MOBILE_SHOP_APPLICATON/src/java/services/LoginService.java</file>
             <file>file:/Users/admin/Documents/ws_temp/MOBILE_SHOP_APPLICATON/src/java/models/dao/UserDAO.java</file>
@@ -28,6 +29,7 @@
             <file>file:/Users/admin/Documents/ws_temp/MOBILE_SHOP_APPLICATON/src/java/utils/ValidatorUtils.java</file>
             <file>file:/Users/admin/Documents/ws_temp/MOBILE_SHOP_APPLICATON/src/java/utils/Query.java</file>
             <file>file:/Users/admin/Documents/ws_temp/MOBILE_SHOP_APPLICATON/src/java/utils/ErrorUtils.java</file>
+            <file>file:/Users/admin/Documents/ws_temp/MOBILE_SHOP_APPLICATON/web/home.jsp</file>
             <file>file:/Users/admin/Documents/ws_temp/MOBILE_SHOP_APPLICATON/web/add-page.jsp</file>
             <file>file:/Users/admin/Documents/ws_temp/MOBILE_SHOP_APPLICATON/src/java/services/UserService.java</file>
             <file>file:/Users/admin/Documents/ws_temp/MOBILE_SHOP_APPLICATON/web/login.jsp</file>

@@ -62,10 +62,8 @@ public class StaffManageController extends HttpServlet {
         List<Mobile> mobiles = mobileService.getAllMobile();
         
         if (mobiles != null && !mobiles.isEmpty()) {
-            // forward để giữ list
             req.setAttribute("mobiles", mobiles);
         } else {
-            // redirect để gửi message bằng query param
             req.setAttribute("message", "Mobile list is empty");
             req.setAttribute("type", "warning");
         }

@@ -62,13 +62,12 @@
                 <div class="container-fluid">
                     <!-- Logo -->
                     <div class="navbar-header" style="margin-right: 20px;">
-                        <a style="font-weight: 400; font-size: 26px;" class="navbar-brand" href="#">Mobile Shop</a>
+                        <a style="font-weight: 400; font-size: 26px;" class="navbar-brand" href="./home">Mobile Shop</a>
                     </div>
 
                     <!-- Menu trái -->
                     <ul class="nav navbar-nav" style="font-size: 16px;">
-                        <li><a href="home.html">Home</a></li>
-                        <li><a href="#">Blog</a></li>
+                        <li><a href="./home">Home</a></li>
                         <li><a href="./staff">Staff Page</a></li>
                     </ul>
 

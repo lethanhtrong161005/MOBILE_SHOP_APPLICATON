@@ -31,9 +31,9 @@ public interface Const {
 //    Page Name
     public final String LOGIN_PAGE = "login.jsp";
     public final String STAFF_PAGE = "staff-page.jsp";
-    public final String HOME_PAGE = "home-page.jsp";
     public final String STAFF_ADD_PAGE = "add-page.jsp";
     public final String STAFF_DELETE_PAGE = "delete-page.jsp";
+    public final String HOME_PAGE = "home.jsp";
 //    End Page Name
     
     
