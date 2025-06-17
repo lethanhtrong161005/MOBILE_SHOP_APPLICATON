@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package services;
 
 import java.util.ArrayList;
@@ -16,10 +13,6 @@ import utils.Const;
 import utils.ErrorUtils;
 import utils.ValidatorUtils;
 
-/**
- *
- * @author admin
- */
 public class MobileService implements I_MobileService{
     
     private final MobileDAO mobileDAO = new MobileDAO();
@@ -127,6 +120,94 @@ public class MobileService implements I_MobileService{
     @Override
     public Mobile searchByID(String id) {
         return mobileDAO.findById(id.trim());
+    }
+
+    @Override
+    public boolean removeMobileById(String id) {
+        return mobileDAO.removeById(id.trim());
+    }
+
+    @Override
+    public List<Mobile> getMobileByIdOrName(String id, String name) {
+        if((id == null || id.trim().isEmpty()) &&
+            (name == null || name.trim().isEmpty())
+           ){
+            return null;
+        }
+        return mobileDAO.findByIdOrName(id.trim(), name.trim());
+    }
+
+    @Override
+    public HashMap<String, List<String>> updateMobile(String txtId, String txtPrice, String txtDescription, String txtQuantity, String txtNotSale) {
+        HashMap<String, List<String>> errors = new HashMap<>();
+        ValidatorUtils valid = new ValidatorUtils();
+        Mobile oldInfo = mobileDAO.findById(txtId.trim());
+        if (oldInfo == null) {
+            ErrorUtils.addError(errors, "txtId", "Mobile not found");
+            return errors;
+        }
+
+        Mobile newInfo = new Mobile();
+
+        newInfo.setMobileId(oldInfo.getMobileId());
+        newInfo.setMobileName(oldInfo.getMobileName());
+        newInfo.setYearOfProduction(oldInfo.getYearOfProduction());
+
+        // --------- Price ---------
+        if (txtPrice != null && !txtPrice.trim().isEmpty()) {
+            if (!valid.isDouble(txtPrice)) {
+                ErrorUtils.addError(errors, "txtPrice", "Price must be a valid number");
+            } else {
+                double price = Double.parseDouble(txtPrice.trim());
+                if (price <= 0) {
+                    ErrorUtils.addError(errors, "txtPrice", "Price must be greater than 0");
+                } else {
+                    newInfo.setPrice(price);
+                }
+            }
+        } else {
+            newInfo.setPrice(oldInfo.getPrice());
+        }
+
+        // --------- Description ---------
+        if (txtDescription != null && !txtDescription.trim().isEmpty()) {
+            newInfo.setDescription(txtDescription.trim());
+        } else {
+            newInfo.setDescription(oldInfo.getDescription());
+        }
+
+        // --------- Quantity ---------
+        if (txtQuantity != null && !txtQuantity.trim().isEmpty()) {
+            if (!valid.isInteger(txtQuantity)) {
+                ErrorUtils.addError(errors, "txtQuantity", "Quantity must be an integer");
+            } else {
+                int quantity = Integer.parseInt(txtQuantity.trim());
+                if (quantity < 0) {
+                    ErrorUtils.addError(errors, "txtQuantity", "Quantity must be a positive number");
+                } else {
+                    newInfo.setQuantity(quantity);
+                }
+            }
+        } else {
+            newInfo.setQuantity(oldInfo.getQuantity());
+        }
+
+        // --------- NotSale ---------
+        if (txtNotSale != null && !txtNotSale.trim().isEmpty()) {
+            if (!valid.isBoolean(txtNotSale)) {
+                ErrorUtils.addError(errors, "txtNotSale", "NotSale must be true or false");
+            } else {
+                newInfo.setNotSale(Boolean.parseBoolean(txtNotSale.trim()));
+            }
+        } else {
+            newInfo.setNotSale(oldInfo.isNotSale());
+        }
+
+        // --------- If valid, update ---------
+        if (errors.isEmpty()) {
+            mobileDAO.updateById(newInfo);
+        }
+        return errors;
     }
     
     

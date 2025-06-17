@@ -1,17 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package services;
 
 import java.util.HashMap;
 import java.util.List;
 import models.dto.Mobile;
 
-/**
- *
- * @author admin
- */
 public interface I_MobileService {
     
     List<Mobile> getAllMobile();
@@ -26,4 +19,16 @@ public interface I_MobileService {
             String txtNotSale);
     
     Mobile searchByID(String id);
+    
+    boolean removeMobileById(String id);
+    
+    List<Mobile> getMobileByIdOrName(String id, String name);
+    
+    HashMap<String, List<String>> updateMobile(
+            String txtId, 
+            String txtPrice,
+            String txtDescription,
+            String txtQuantity,
+            String txtNotSale);
+    
 }

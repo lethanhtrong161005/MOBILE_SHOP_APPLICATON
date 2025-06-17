@@ -1,8 +1,3 @@
-<%-- 
-    Document   : staff-page
-    Created on : Jun 11, 2025, 1:44:23 PM
-    Author     : Le Thanh Trong
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.text.NumberFormat" %>
@@ -126,7 +121,7 @@
     <!-- Section One -->
     <div class="container">
         <!-- Search Form -->
-        <form class="row align-items-center" style="margin-bottom: 20px;" onsubmit="searchMobile(); return false;">
+        <form action="staff-search" method="get" class="row align-items-center" style="margin-bottom: 20px;" onsubmit="searchMobile(); return false;">
             <div class="col-sm-3">
                 <input type="text" id="searchId" class="form-control" placeholder="Search by ID" name="txtSearchId">
             </div>
@@ -176,7 +171,7 @@
                                     <input type="hidden" name="txtId" value="<%= item.getMobileId() %>" />
                                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                         </form>
-                        <form action="<%= request.getContextPath() %>/update" method="GET" style="display:inline;">
+                        <form action="<%= request.getContextPath() %>/staff-update" method="GET" style="display:inline;">
                                     <input type="hidden" name="txtId" value="<%= item.getMobileId() %>" />
                                     <button type="submit" class="btn btn-success btn-sm">Update</button>
                         </form>
@@ -192,17 +187,6 @@
         </table>
     </div>
     <!-- End Section One -->
-
-
-
-
-
-
-
-
-
-
-
 
     <!-- jQuery -->
     <script src="bootstrap/dist/js/bootstrap.js"></script>

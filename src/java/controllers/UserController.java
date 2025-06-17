@@ -13,10 +13,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 
-/**
- *
- * @author admin
- */
 @WebServlet(name = "UserController", urlPatterns = {"/UserController"})
 public class UserController extends HttpServlet {
 

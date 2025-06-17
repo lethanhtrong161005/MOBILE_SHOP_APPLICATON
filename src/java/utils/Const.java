@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package utils;
 
 import java.util.regex.Pattern;
 
-/**
- *
- * @author Le Thanh Trong
- */
 public interface Const {
     
 
@@ -18,9 +11,10 @@ public interface Const {
     public final String LOGIN_URL = "/login";
     
     public final String STAFF_URL ="/staff";
-    public final String STAFF_SEARCH_URL = "/staff/search";
+    public final String STAFF_SEARCH_URL = "/staff-search";
     public final String STAFF_ADD_URL = "/staff-add";
     public final String STAFF_DELETE_URL = "/staff-delete";
+    public final String STAFF_UPDATE_URL = "/staff-update";
     
     public final String HOME_URL = "/home";
     public final String LOGOUT_URL = "/logout";
@@ -34,6 +28,7 @@ public interface Const {
     public final String HOME_PAGE = "home-page.jsp";
     public final String STAFF_ADD_PAGE = "add-page.jsp";
     public final String STAFF_DELETE_PAGE = "delete-page.jsp";
+    public final String STAFF_UPDATE_PAGE = "update-page.jsp";
 //    End Page Name
     
     
