@@ -1,13 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package utils;
 
-/**
- *
- * @author admin
- */
+
 public interface Query {
     
     
@@ -18,6 +12,15 @@ public interface Query {
     
     public final String FIND_MOBILE_BY_ID = "SELECT * FROM Mobiles WHERE mobileId = ?";
     
+    public final String FIND_MOBILE_BY_ID_OR_NAME = 
+    "SELECT * FROM Mobiles WHERE mobileId COLLATE Latin1_General_CI_AI = ? OR mobileName COLLATE Latin1_General_CI_AI = ?";
+
     public final String ADD_MOBILE = "INSERT INTO Mobiles (mobileId, mobileName, description, price, yearOfProduction, quantity, notSale)VALUES(?,?,?,?,?,?,?)";
+    
+    public final String REMOVE_MOBILE_BY_ID = "DELETE FROM Mobiles WHERE mobileId = ?";
+    
+    public final String UPDATE_MOBILE_BY_ID = "UPDATE Mobiles SET price=?, description=?, quantity=?, notSale=? WHERE mobileId=?";
+    
+    
    
 }

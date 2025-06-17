@@ -1,8 +1,3 @@
-<%-- 
-    Document   : create.jsp
-    Created on : Jun 14, 2025, 2:24:21 PM
-    Author     : admin
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.Map, java.util.List" %>

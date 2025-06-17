@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import models.dto.Mobile;
+import utils.Const;
 import utils.DbUtils;
 import utils.Query;
 
@@ -91,6 +92,70 @@ public class MobileDAO implements I_MobileDAO{
             System.out.println("findById: " + e.getMessage());
         }
         return null; 
+    }
+
+    @Override
+    public boolean removeById(String id) {
+        int rowDeleted = 0;
+        try(Connection connection = DbUtils.getConnection();
+            PreparedStatement statement = connection.prepareStatement(Query.REMOVE_MOBILE_BY_ID)){
+            
+            statement.setString(1, id);
+            rowDeleted = statement.executeUpdate();
+            
+        }catch(Exception e){
+            System.out.println("removeById: " + e.getMessage());
+        }
+        return rowDeleted > 0;
+    }
+
+    @Override
+    public List<Mobile> findByIdOrName(String id, String name) {
+        List<Mobile> mobiles = new ArrayList<>();
+        try(Connection connection = DbUtils.getConnection();
+            PreparedStatement  statement = connection.prepareStatement(Query.FIND_MOBILE_BY_ID_OR_NAME)
+            ){
+            
+            statement.setString(1, id);
+            statement.setString(2, name);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()){
+                Mobile mobile = new Mobile();
+                mobile.setMobileId(rs.getString("mobileId"));
+                mobile.setMobileName(rs.getString("mobileName"));
+                mobile.setDescription(rs.getString("description"));
+                mobile.setPrice(rs.getFloat("price"));
+                mobile.setQuantity(rs.getInt("quantity"));
+                mobile.setYearOfProduction(rs.getInt("yearOfProduction"));
+                mobile.setNotSale(rs.getBoolean("notSale"));
+                mobiles.add(mobile);
+            }
+            
+        }catch(Exception e){
+            System.out.println("findByIdOrName: " + e.getMessage());
+        }
+        return mobiles;
+    }
+
+    @Override
+    public boolean updateById(Mobile mobile) {
+        int rowUpdated = 0;
+        try(Connection connection = DbUtils.getConnection();
+            PreparedStatement statement = connection.prepareStatement(Query.UPDATE_MOBILE_BY_ID)){
+            
+            statement.setFloat(1, (float) mobile.getPrice());
+            statement.setString(2, mobile.getDescription());
+            statement.setInt(3, mobile.getQuantity());
+            statement.setBoolean(4, mobile.isNotSale());
+            
+            statement.setString(5, mobile.getMobileId());
+            
+            rowUpdated = statement.executeUpdate();
+            
+        }catch(Exception e){
+            System.out.println("updateById: " + e.getMessage());
+        }
+        return rowUpdated > 0;
     }
 
 

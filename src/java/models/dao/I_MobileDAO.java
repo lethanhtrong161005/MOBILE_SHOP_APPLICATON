@@ -19,4 +19,10 @@ public interface I_MobileDAO {
     
     Mobile findById(String id);
     
+    boolean removeById(String id);
+    
+    List<Mobile> findByIdOrName(String id, String name);
+    
+    boolean updateById(Mobile mobile);
+    
 }

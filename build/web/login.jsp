@@ -1,8 +1,3 @@
-<%-- 
-    Document   : login
-    Created on : Jun 8, 2025, 6:02:59 PM
-    Author     : Le Thanh Trong
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

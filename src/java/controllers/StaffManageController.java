@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 
 package controllers;
 
@@ -17,10 +13,7 @@ import services.MobileService;
 import utils.Const;
 import utils.RedirectUtils;
 
-/**
- *
- * @author Le Thanh Trong
- */
+
 @WebServlet(name="StaffManageController", urlPatterns={Const.STAFF_URL, 
                                                 })
 public class StaffManageController extends HttpServlet {
@@ -28,13 +21,7 @@ public class StaffManageController extends HttpServlet {
     private MobileService mobileService = new MobileService();
     
    
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+ 
     protected void processRequest(
             HttpServletRequest req, 
             HttpServletResponse resp
@@ -44,10 +31,6 @@ public class StaffManageController extends HttpServlet {
        String path = req.getServletPath();
        if(Const.STAFF_URL.endsWith(path)){
            loadMobileList(req, resp);
-       }else if(Const.STAFF_DELETE_URL.endsWith(path)){
-           if("GET".equalsIgnoreCase(req.getMethod())){
-               resp.sendRedirect(req.getContextPath() + Const.STAFF_DELETE_URL);
-           }
        }
            
     }
@@ -85,26 +68,16 @@ public class StaffManageController extends HttpServlet {
         processRequest(request, response);
     } 
 
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+ 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

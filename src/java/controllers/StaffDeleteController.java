@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+
 
 package controllers;
 
@@ -15,30 +12,25 @@ import jakarta.servlet.http.HttpServletResponse;
 import models.dto.Mobile;
 import services.MobileService;
 import utils.Const;
+import utils.RedirectUtils;
 
-/**
- *
- * @author admin
- */
 @WebServlet(name="StaffDeleteController", urlPatterns={Const.STAFF_DELETE_URL})
 public class StaffDeleteController extends HttpServlet {
     
     private MobileService mobileService = new MobileService();
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest req, 
+
+    protected void processRequest(
+            HttpServletRequest req, 
             HttpServletResponse resp
     )throws ServletException, IOException 
-    {
+    {   
         String path = req.getServletPath();
         if(Const.STAFF_DELETE_URL.endsWith(path)){
-            
+            if("GET".equalsIgnoreCase(req.getMethod())){
+                loadFormDeleteGet(req, resp);
+            }else if("POST".equalsIgnoreCase(req.getMethod())){
+                deleteMobilePost(req, resp);
+            }
         }
     }
     
@@ -49,51 +41,63 @@ public class StaffDeleteController extends HttpServlet {
     {
         String txtId = req.getParameter("txtId");
         Mobile mobile = mobileService.searchByID(txtId);
+
         if (mobile == null || mobile.getMobileId() == null) {
             req.setAttribute("message", "Mobile not found");
             req.setAttribute("type", "danger");
-            req.getRequestDispatcher(Const.STAFF_PAGE).forward(req, resp);
-            return;
+        } else {
+            req.setAttribute("mobile", mobile);
         }
-        
-        req.setAttribute("mobile", mobile);
-        req.getRequestDispatcher(Const.STAFF_DELETE_PAGE).forward(req, resp); 
+
+        req.getRequestDispatcher(Const.STAFF_DELETE_PAGE).forward(req, resp);
+    }
+    
+    private void deleteMobilePost(
+            HttpServletRequest req, 
+            HttpServletResponse resp
+    )throws ServletException, IOException 
+    {   
+        String txtId = req.getParameter("txtId");
+        String message = "";
+        String type = "";
+        System.out.println(txtId);
+
+        if (txtId != null && !txtId.trim().isEmpty()) {
+            boolean deleted = mobileService.removeMobileById(txtId);
+            if (deleted) {
+                message = "Deleted mobile with ID: " + txtId + " successfully.";
+                type = "success";
+            } else {
+                message = "Failed to delete mobile with ID: " + txtId + ".";
+                type = "danger";
+            }
+        } else {
+            message = "Invalid mobile ID.";
+            type = "danger";
+        }
+
+        String redirectUrl = RedirectUtils.buildMessageRedirectUrl(Const.STAFF_URL, message, type);
+        resp.sendRedirect(req.getContextPath() + redirectUrl);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
     } 
 
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
+
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }
